@@ -1,3 +1,4 @@
+import queue
 graph = {
     "a":["b","c"],
     "b":["d"],
@@ -8,7 +9,7 @@ graph = {
 }
 
 
-def depth_first_print(graph, source, goal):
+def depth_first_search(graph, source, goal):
     stack = [source]
     tree = []
 
@@ -20,7 +21,20 @@ def depth_first_print(graph, source, goal):
         for neighbor in graph[current] :
             stack.append(neighbor)
 
+def bridth_first_search(graph, source, goal):
+    q = queue.Queue() 
+    q.put(source,block=True,timeout=None)
+    tree = []
+    
+    while not q.empty() :
+        current = q.get(block= True, timeout=False)
+        tree.append(current)
+        if current == goal:
+            return tree
+        for neighbor in graph[current] :
+            q.put(neighbor,block=True,timeout=None)
 
-print( depth_first_print(graph,"a","b") )
+
+print( bridth_first_search(graph,"a","e") )
 
 
